@@ -82,11 +82,14 @@ class R < Formula
       system "make check 2>&1 | tee make-check.log" if build.with? 'check'
       system "make install"
 
-      # Link binaries and manpages from the Framework
+      # Link binaries, headers, libraries, & manpages from the Framework
       # into the normal locations
       if OS.mac?
         bin.install_symlink prefix/"R.framework/Resources/bin/R"
         bin.install_symlink prefix/"R.framework/Resources/bin/Rscript"
+        frameworks.install_symlink prefix/"R.framework"
+        include.install_symlink prefix/"R.framework/Resources/include/R.h"
+        lib.install_symlink prefix/"R.framework/Resources/lib/libR.dylib"
         man1.install_symlink prefix/"R.framework/Resources/man1/R.1"
         man1.install_symlink prefix/"R.framework/Resources/man1/Rscript.1"
       end
